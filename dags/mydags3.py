@@ -17,12 +17,12 @@ except ModuleNotFoundError:
 from airflow.utils.edgemodifier import Label
 
 from airflow.operators.python import PythonOperator
+from airflow.operators.bash import BashOperator
 from airflow.exceptions import AirflowException
 
 def echo_pip_list():
-    from pip import _internal
-    pack_list = _internal.main(['list'])
-    print(pack_list)
+
+    print('run dummy python')
 
 
 
@@ -44,8 +44,10 @@ with DAG(
 
     end = EmptyOperator(task_id="end")
 
+
     # [START howto_operator_adf_run_pipeline]
+    run_bash_func = BashOperator(bash_command='pip list')
     run_python_func = PythonOperator(task_id="print_the_context", python_callable=echo_pip_list)
     # [END howto_operator_adf_run_pipeline]
 
-    begin >> run_python_func >> end
+    begin >> run_bash_func >> run_python_func >> end
