@@ -46,7 +46,7 @@ with DAG(
 
 
     # [START howto_operator_adf_run_pipeline]
-    run_bash_func = BashOperator(bash_command='pip list')
+    run_bash_func = BashOperator(task_id='print_pip_list_with_bash', bash_command='pip list')
     run_python_func = PythonOperator(task_id="print_the_context", python_callable=echo_pip_list)
     # [END howto_operator_adf_run_pipeline]
 
