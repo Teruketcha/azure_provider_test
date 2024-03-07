@@ -47,6 +47,7 @@ with DAG(
 
     # [START howto_operator_adf_run_pipeline]
     run_bash_func = BashOperator(task_id='print_pip_list_with_bash', bash_command='pip list')
+    run_bash_func2 = BashOperator(task_id='print_env_list_with_bash', bash_command='env')
     run_bash_check_disk = BashOperator(task_id='run_bash_check_disk', bash_command='df -h')
     run_bash_check_mem = BashOperator(task_id='run_bash_check_mem', bash_command='free -h')
     run_bash_check_dir = BashOperator(task_id='run_bash_check_dir', bash_command='pwd')
