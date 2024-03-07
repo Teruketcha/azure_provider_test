@@ -50,6 +50,7 @@ with DAG(
     run_bash_check_disk = BashOperator(task_id='run_bash_check_disk', bash_command='df -h')
     run_bash_check_mem = BashOperator(task_id='run_bash_check_mem', bash_command='free -h')
     run_bash_check_dir = BashOperator(task_id='run_bash_check_dir', bash_command='pwd')
+    run_bash_check_public = BashOperator(task_id='run_bash_check_public', bash_command='curl google.com')
     run_python_func = PythonOperator(task_id="print_the_context", python_callable=echo_pip_list)
     # [END howto_operator_adf_run_pipeline]
 
