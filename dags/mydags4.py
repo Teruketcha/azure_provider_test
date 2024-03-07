@@ -27,7 +27,7 @@ from azure.storage.blob import BlobServiceClient
 def azure_api_test():
 
     token_credential = DefaultAzureCredential()
-    print(token_credential.get_token())
+    print(token_credential.get_token('https://tdealstorage.blob.core.windows.net'))
 
 
 
