@@ -20,11 +20,24 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from airflow.exceptions import AirflowException
 
+from retry import retry
+
 def echo_pip_list():
 
     print('run dummy python')
 
 
+def run_retry_pack():
+    try_count = 5
+    current_count = 0
+
+    @retry(tries=try_count)
+    def retried_func():
+        current_count = current_count + 1
+        print(f'try retry pack. count {current_count}')
+        raise Exception('manual exception')
+
+    retried_func()
 
 with DAG(
     dag_id='test-normal-python-task',
@@ -53,6 +66,7 @@ with DAG(
     run_bash_check_dir = BashOperator(task_id='run_bash_check_dir', bash_command='pwd')
     run_bash_check_public = BashOperator(task_id='run_bash_check_public', bash_command='curl google.com')
     run_python_func = PythonOperator(task_id="print_the_context", python_callable=echo_pip_list)
+    run_python_retry_test = PythonOperator(task_id="run_python_retry_test", python_callable=run_retry_pack)
     # [END howto_operator_adf_run_pipeline]
 
     begin >> run_bash_func >> run_python_func >> end
