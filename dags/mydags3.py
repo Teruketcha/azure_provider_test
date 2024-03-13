@@ -33,6 +33,7 @@ def run_retry_pack():
 
     @retry(tries=try_count)
     def retried_func():
+        nonlocal current_count
         current_count = current_count + 1
         print(f'try retry pack. count {current_count}')
         raise Exception('manual exception')
@@ -51,7 +52,7 @@ with DAG(
         "factory_name": "sktdatalake-azure-adf-jihwan",  # This can also be specified in the ADF connection.
         "resource_group_name": "rg.datalake.dev.datafactory",  # This can also be specified in the ADF connection.
     },
-    default_view="graph",
+    default_view="grid",
 ) as dag:
     begin = EmptyOperator(task_id="begin")
 
